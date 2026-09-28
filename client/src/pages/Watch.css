@@ -1,0 +1,562 @@
+.watch-page {
+  /*
+   * IMPORTANT:
+   * The sidebar is fixed, so the watch page must reserve
+   * space for it.
+   */
+  width: calc(100% - 250px);
+  min-height: 100vh;
+  margin-left: 250px;
+  padding: 32px 28px 60px;
+  box-sizing: border-box;
+  background: var(--bg, #000000);
+  color: var(--text, #ffffff);
+}
+
+.watch-page__container {
+  width: 100%;
+  max-width: 1700px;
+  margin: 0 auto;
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.watch-page__header {
+  margin-bottom: 22px;
+}
+
+.watch-page__breadcrumb {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+  color: var(--secondary-text, #9ca3af);
+  font-size: 13px;
+}
+
+.watch-page__breadcrumb a {
+  color: #9ca3af;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.watch-page__breadcrumb a:hover {
+  color: #ffffff;
+}
+
+.watch-page__breadcrumb span {
+  color: #555555;
+}
+
+.watch-page__title {
+  margin: 0;
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+/* =========================================
+   MAIN WATCH AREA
+========================================= */
+
+.watch-page__watch-area {
+  display: grid;
+
+  /*
+   * Player gets the remaining width.
+   * Episodes get a fixed right column.
+   */
+  grid-template-columns: minmax(0, 1fr) 340px;
+
+  gap: 20px;
+
+  width: 100%;
+  min-width: 0;
+  align-items: start;
+}
+
+/* =========================================
+   LEFT / PLAYER COLUMN
+========================================= */
+
+.watch-page__main {
+  min-width: 0;
+  width: 100%;
+}
+
+.watch-page__player-wrapper {
+  width: 100%;
+  min-width: 0;
+}
+
+/*
+ * Prevent the video player from creating
+ * horizontal overflow.
+ */
+.watch-page__player-wrapper > * {
+  max-width: 100%;
+}
+
+/* =========================================
+   SERVERS
+========================================= */
+
+.watch-page__servers {
+  width: 100%;
+  margin-top: 16px;
+}
+
+.watch-page__servers-loading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  min-height: 70px;
+  padding: 16px 18px;
+
+  background: #111111;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+
+  color: #9ca3af;
+  font-size: 14px;
+}
+
+.watch-page__no-servers {
+  padding: 18px;
+
+  background: #111111;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+
+  color: #9ca3af;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* =========================================
+   EPISODE SIDEBAR
+========================================= */
+
+.watch-page__episodes {
+  /*
+   * Critical:
+   * This makes the episode panel independent
+   * from the player height.
+   */
+  min-width: 0;
+  width: 100%;
+
+  overflow: hidden;
+
+  background: #111111;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+
+  box-sizing: border-box;
+}
+
+/*
+ * The episode panel itself scrolls instead of
+ * pushing the entire page down.
+ */
+.watch-page__episodes-body {
+  max-height: calc(100vh - 190px);
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  scrollbar-width: thin;
+}
+
+/* Chrome / Edge scrollbar */
+.watch-page__episodes-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.watch-page__episodes-body::-webkit-scrollbar-track {
+  background: #111111;
+}
+
+.watch-page__episodes-body::-webkit-scrollbar-thumb {
+  background: #333333;
+  border-radius: 20px;
+}
+
+.watch-page__episodes-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  min-height: 70px;
+  padding: 14px 16px;
+
+  background: #171717;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+  box-sizing: border-box;
+}
+
+.watch-page__episodes-header > div {
+  min-width: 0;
+}
+
+.watch-page__episodes-header h2 {
+  margin: 0 0 4px;
+
+  color: #ffffff;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.watch-page__episodes-header span {
+  color: #9ca3af;
+  font-size: 12px;
+}
+
+.watch-page__episodes-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 250px;
+  padding: 30px;
+
+  color: #9ca3af;
+  text-align: center;
+}
+
+.watch-page__episodes-loading p {
+  margin: 12px 0 0;
+  font-size: 13px;
+}
+
+.watch-page__episodes-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 200px;
+  padding: 25px;
+
+  color: #9ca3af;
+  text-align: center;
+}
+
+.watch-page__episodes-empty p {
+  margin: 0;
+  font-size: 13px;
+}
+
+/*
+ * Make sure EpisodeList doesn't create an
+ * unexpected horizontal overflow inside the
+ * right column.
+ */
+.watch-page__episodes .episode-list {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* =========================================
+   RELATED CONTENT
+========================================= */
+
+.watch-page__related {
+  width: 100%;
+  margin-top: 34px;
+  padding-top: 26px;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.watch-page__related-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  margin-bottom: 18px;
+}
+
+.watch-page__section-label {
+  display: block;
+  margin-bottom: 5px;
+
+  color: #3b82f6;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+.watch-page__related-header h2 {
+  margin: 0;
+
+  color: #ffffff;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.watch-page__related-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 120px;
+  padding: 20px;
+
+  background: #111111;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+
+  color: #777777;
+  text-align: center;
+}
+
+.watch-page__related-placeholder p {
+  margin: 0;
+  font-size: 13px;
+}
+
+/* =========================================
+   LOADING
+========================================= */
+
+.watch-page__loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 60vh;
+
+  color: #9ca3af;
+  text-align: center;
+}
+
+.watch-page__loading p {
+  margin: 14px 0 0;
+  font-size: 14px;
+}
+
+.watch-page__spinner,
+.watch-page__small-spinner {
+  display: block;
+
+  border-style: solid;
+  border-color: rgba(255, 255, 255, 0.12);
+  border-top-color: #3b82f6;
+  border-radius: 50%;
+
+  animation: watch-page-spin 0.8s linear infinite;
+}
+
+.watch-page__spinner {
+  width: 42px;
+  height: 42px;
+  border-width: 4px;
+}
+
+.watch-page__small-spinner {
+  width: 18px;
+  height: 18px;
+  border-width: 2px;
+  flex-shrink: 0;
+}
+
+@keyframes watch-page-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================================
+   ERROR
+========================================= */
+
+.watch-page__error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 60vh;
+  padding: 40px;
+
+  text-align: center;
+}
+
+.watch-page__error-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 54px;
+  height: 54px;
+  margin-bottom: 16px;
+
+  background: #171717;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+
+  color: #ef4444;
+  font-size: 25px;
+  font-weight: 700;
+}
+
+.watch-page__error h2 {
+  margin: 0 0 8px;
+
+  color: #ffffff;
+  font-size: 20px;
+}
+
+.watch-page__error p {
+  max-width: 500px;
+  margin: 0;
+
+  color: #9ca3af;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* =========================================
+   LARGE SCREENS
+========================================= */
+
+@media (min-width: 1400px) {
+  .watch-page__watch-area {
+    grid-template-columns: minmax(0, 1fr) 360px;
+  }
+}
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 1100px) {
+  .watch-page {
+    width: calc(100% - 220px);
+    margin-left: 220px;
+    padding: 25px 20px 50px;
+  }
+
+  .watch-page__watch-area {
+    grid-template-columns: minmax(0, 1fr) 300px;
+    gap: 16px;
+  }
+}
+
+/* =========================================
+   SMALL TABLET
+========================================= */
+
+@media (max-width: 900px) {
+  .watch-page {
+    width: 100%;
+    margin-left: 0;
+    padding: 22px 18px 45px;
+  }
+
+  /*
+   * At this point there isn't enough width for
+   * a comfortable player + episode column.
+   *
+   * Stack them.
+   */
+  .watch-page__watch-area {
+    grid-template-columns: 1fr;
+  }
+
+  .watch-page__episodes {
+    order: 2;
+  }
+
+  .watch-page__main {
+    order: 1;
+  }
+
+  .watch-page__episodes-body {
+    max-height: 400px;
+  }
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+  .watch-page {
+    padding: 16px 12px 35px;
+  }
+
+  .watch-page__header {
+    margin-bottom: 16px;
+  }
+
+  .watch-page__breadcrumb {
+    gap: 6px;
+    font-size: 11px;
+  }
+
+  .watch-page__title {
+    font-size: 18px;
+  }
+
+  .watch-page__watch-area {
+    gap: 14px;
+  }
+
+  .watch-page__servers {
+    margin-top: 12px;
+  }
+
+  .watch-page__episodes {
+    border-radius: 9px;
+  }
+
+  .watch-page__episodes-header {
+    min-height: 60px;
+    padding: 12px 14px;
+  }
+
+  .watch-page__episodes-header h2 {
+    font-size: 16px;
+  }
+
+  .watch-page__episodes-body {
+    max-height: 350px;
+  }
+
+  .watch-page__related {
+    margin-top: 25px;
+    padding-top: 22px;
+  }
+
+  .watch-page__related-header h2 {
+    font-size: 19px;
+  }
+}
+
+/* =========================================
+   VERY SMALL MOBILE
+========================================= */
+
+@media (max-width: 400px) {
+  .watch-page {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .watch-page__title {
+    font-size: 16px;
+  }
+
+  .watch-page__episodes-body {
+    max-height: 300px;
+  }
+}

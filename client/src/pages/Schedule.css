@@ -1,0 +1,126 @@
+.schedule-page {
+  margin-left: 240px;
+  width: calc(100% - 240px);
+  min-height: calc(100vh - 80px);
+  box-sizing: border-box;
+}
+
+.schedule-container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px;
+  box-sizing: border-box;
+}
+
+.schedule-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 30px;
+}
+
+.schedule-header-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  background: rgba(59, 130, 246, 0.12);
+  color: var(--color-primary);
+}
+
+.schedule-header h1 {
+  margin: 0 0 6px;
+  color: var(--color-text);
+  font-size: 28px;
+  font-weight: var(--font-weight-semibold);
+}
+
+.schedule-header p {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+.schedule-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.schedule-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 76px;
+  padding: 14px 18px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-card);
+  box-sizing: border-box;
+}
+
+.schedule-item__icon {
+  flex: 0 0 auto;
+  color: var(--color-primary);
+}
+
+.schedule-item__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.schedule-item__title {
+  display: block;
+  margin: 0 0 6px;
+  color: var(--color-text);
+  font-size: 16px;
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+}
+
+a.schedule-item__title:hover {
+  color: var(--color-primary);
+}
+
+.schedule-item__episode {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.schedule-item__time {
+  flex: 0 0 auto;
+  color: var(--color-primary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+}
+
+@media (max-width: 900px) {
+  .schedule-page {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .schedule-container {
+    padding: 24px 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .schedule-container {
+    padding: 20px 16px;
+  }
+
+  .schedule-header h1 {
+    font-size: 22px;
+  }
+
+  .schedule-item {
+    align-items: flex-start;
+  }
+
+  .schedule-item__time {
+    font-size: 12px;
+  }
+}

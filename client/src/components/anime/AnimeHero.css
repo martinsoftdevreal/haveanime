@@ -1,0 +1,311 @@
+.anime-hero {
+  position: relative;
+  min-height: 520px;
+  margin-bottom: var(--space-8);
+  overflow: hidden;
+  background: var(--color-bg-secondary);
+}
+
+.anime-hero__slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 800ms ease,
+    visibility 800ms ease;
+}
+
+.anime-hero__slide--active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.anime-hero__backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transform: scale(1.02);
+}
+
+.anime-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.98) 0%,
+      rgba(0, 0, 0, 0.85) 35%,
+      rgba(0, 0, 0, 0.45) 65%,
+      rgba(0, 0, 0, 0.2) 100%
+    ),
+    linear-gradient(
+      0deg,
+      var(--color-bg) 0%,
+      transparent 35%
+    );
+}
+
+.anime-hero__content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  min-height: 520px;
+  width: min(100% - 2rem, var(--container-max-width));
+  margin-inline: auto;
+  padding-block: var(--space-12);
+}
+
+.anime-hero__info {
+  width: min(100%, 700px);
+}
+
+.anime-hero__label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+  color: var(--color-primary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.anime-hero__title {
+  max-width: 700px;
+  margin-bottom: var(--space-4);
+  color: var(--color-text);
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+}
+
+.anime-hero__alternative-title {
+  margin-bottom: var(--space-4);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.anime-hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.anime-hero__meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.anime-hero__meta-item--quality {
+  padding: 0.2rem 0.45rem;
+  border-radius: var(--radius-sm);
+  background: var(--color-primary);
+  color: var(--color-text);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+}
+
+.anime-hero__synopsis {
+  max-width: 650px;
+  margin-bottom: var(--space-6);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-relaxed);
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.anime-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.anime-hero__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding-inline: var(--space-5);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  transition:
+    background-color var(--transition-normal),
+    transform var(--transition-fast),
+    opacity var(--transition-fast);
+}
+
+.anime-hero__button:hover {
+  transform: translateY(-2px);
+}
+
+.anime-hero__button--primary {
+  background: var(--color-primary);
+  color: var(--color-text);
+}
+
+.anime-hero__button--primary:hover {
+  background: var(--color-primary-hover);
+}
+
+.anime-hero__button--secondary {
+  border: 1px solid var(--border-color);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--color-text);
+  backdrop-filter: blur(8px);
+}
+
+.anime-hero__button--secondary:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.anime-hero__indicators {
+  position: absolute;
+  z-index: 3;
+  right: max(1rem, calc((100% - var(--container-max-width)) / 2));
+  bottom: var(--space-6);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.anime-hero__indicator {
+  width: 28px;
+  height: 4px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.35);
+  transition:
+    width var(--transition-normal),
+    background-color var(--transition-normal);
+}
+
+.anime-hero__indicator--active {
+  width: 42px;
+  background: var(--color-primary);
+}
+
+.anime-hero__indicator:hover {
+  background: var(--color-text);
+}
+
+.anime-hero__empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 420px;
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+@media (max-width: 1024px) {
+  .anime-hero {
+    min-height: 460px;
+  }
+
+  .anime-hero__content {
+    min-height: 460px;
+  }
+
+  .anime-hero__synopsis {
+    max-width: 580px;
+  }
+}
+
+@media (max-width: 768px) {
+  .anime-hero {
+    min-height: 500px;
+  }
+
+  .anime-hero__content {
+    align-items: flex-end;
+    min-height: 500px;
+    width: min(100% - 1.5rem, 100%);
+    padding-block: var(--space-8);
+  }
+
+  .anime-hero__overlay {
+    background:
+      linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.98) 0%,
+        rgba(0, 0, 0, 0.78) 45%,
+        rgba(0, 0, 0, 0.3) 100%
+      );
+  }
+
+  .anime-hero__title {
+    margin-bottom: var(--space-3);
+    font-size: clamp(1.75rem, 8vw, 2.75rem);
+  }
+
+  .anime-hero__synopsis {
+    margin-bottom: var(--space-5);
+    font-size: var(--font-size-sm);
+    -webkit-line-clamp: 3;
+  }
+
+  .anime-hero__indicators {
+    right: 50%;
+    bottom: var(--space-4);
+    transform: translateX(50%);
+  }
+}
+
+@media (max-width: 480px) {
+  .anime-hero {
+    min-height: 460px;
+    margin-bottom: var(--space-5);
+  }
+
+  .anime-hero__content {
+    min-height: 460px;
+    width: min(100% - 1rem, 100%);
+    padding-block: var(--space-6);
+  }
+
+  .anime-hero__meta {
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+  }
+
+  .anime-hero__actions {
+    width: 100%;
+  }
+
+  .anime-hero__button {
+    flex: 1;
+    min-width: 130px;
+  }
+
+  .anime-hero__indicator {
+    width: 20px;
+  }
+
+  .anime-hero__indicator--active {
+    width: 30px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anime-hero__slide {
+    transition: none;
+  }
+
+  .anime-hero__indicator {
+    transition: none;
+  }
+}

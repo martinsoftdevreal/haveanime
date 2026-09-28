@@ -1,0 +1,170 @@
+.genres-page {
+  min-height: 100vh;
+  margin-left: var(--sidebar-width);
+  padding-bottom: var(--space-10);
+}
+
+.genres-container {
+  width: min(100% - 2rem, var(--container-max-width));
+  margin-inline: auto;
+}
+
+.genres-header {
+  padding-block: var(--space-8);
+}
+
+.genres-header h1 {
+  color: var(--color-text);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+}
+
+.genres-header p {
+  margin-top: var(--space-2);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+/* ================================
+   GENRE LIST
+================================ */
+
+.genres-list {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.genre-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 70px;
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  background: var(--color-bg-card);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  text-align: center;
+  transition:
+    transform var(--transition-normal),
+    border-color var(--transition-normal),
+    background var(--transition-normal),
+    color var(--transition-normal);
+}
+
+.genre-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--color-primary);
+  color: var(--color-text);
+  background: var(--color-bg-hover);
+}
+
+/* ================================
+   ANIME RESULTS
+================================ */
+
+.genres-anime-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: var(--space-5);
+}
+
+/* ================================
+   1200px
+================================ */
+
+@media (max-width: 1200px) {
+  .genres-list {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .genres-anime-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+
+/* ================================
+   1024px
+================================ */
+
+@media (max-width: 1024px) {
+  .genres-list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-3);
+  }
+
+  .genres-anime-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+}
+
+/* ================================
+   768px
+================================ */
+
+@media (max-width: 768px) {
+  .genres-page {
+    margin-left: 0;
+    padding-bottom: calc(
+      var(--mobile-navbar-height) + var(--space-6)
+    );
+  }
+
+  .genres-container {
+    width: min(100% - 1.5rem, 100%);
+  }
+
+  .genres-header {
+    padding-block: var(--space-5);
+  }
+
+  .genres-header h1 {
+    font-size: var(--font-size-xl);
+  }
+
+  .genres-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-3);
+  }
+
+  .genre-card {
+    min-height: 60px;
+    padding: var(--space-3);
+  }
+
+  .genres-anime-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-3);
+  }
+}
+
+/* ================================
+   480px
+================================ */
+
+@media (max-width: 480px) {
+  .genres-container {
+    width: min(100% - 1rem, 100%);
+  }
+
+  .genres-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-2);
+  }
+
+  .genre-card {
+    min-height: 56px;
+    padding: var(--space-2);
+    font-size: var(--font-size-xs);
+  }
+
+  .genres-anime-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-3);
+  }
+}

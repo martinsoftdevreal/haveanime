@@ -1,0 +1,83 @@
+/* =================================
+   Large screens
+================================= */
+
+@media (min-width: 1400px) {
+  .container {
+    width: min(100% - 3rem, var(--container-max-width));
+  }
+}
+
+/* =================================
+   Tablets
+================================= */
+
+@media (max-width: 1024px) {
+  .container {
+    width: min(100% - 2rem, 100%);
+  }
+
+  .page-section {
+    padding-block: var(--space-6);
+  }
+
+  .section-title {
+    font-size: var(--font-size-xl);
+  }
+}
+
+/* =================================
+   Mobile
+================================= */
+
+@media (max-width: 768px) {
+  html {
+    font-size: 15px;
+  }
+
+  .container {
+    width: min(100% - 1.5rem, 100%);
+  }
+
+  .page-section {
+    padding-block: var(--space-5);
+  }
+
+  .section-title {
+    margin-bottom: var(--space-4);
+    font-size: var(--font-size-lg);
+  }
+}
+
+/* =================================
+   Small mobile
+================================= */
+
+@media (max-width: 480px) {
+  html {
+    font-size: 14px;
+  }
+
+  .container {
+    width: min(100% - 1rem, 100%);
+  }
+
+  .page-section {
+    padding-block: var(--space-4);
+  }
+}
+
+/* =================================
+   Reduced motion
+================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

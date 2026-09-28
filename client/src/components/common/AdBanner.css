@@ -1,0 +1,37 @@
+.ad-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 90px;
+  margin-block: var(--space-8);
+  padding: var(--space-4);
+  border: 1px solid var(--border-color-light);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-secondary);
+  overflow: hidden;
+}
+
+.ad-banner__content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 70px;
+  color: var(--color-text-dark);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 768px) {
+  .ad-banner {
+    min-height: 70px;
+    margin-block: var(--space-5);
+    padding: var(--space-3);
+  }
+
+  .ad-banner__content {
+    min-height: 50px;
+  }
+}

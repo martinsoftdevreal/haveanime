@@ -1,0 +1,129 @@
+.auth-page {
+  margin-left: 240px;
+  min-height: calc(100vh - 80px);
+  width: calc(100% - 240px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+  box-sizing: border-box;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 430px;
+  padding: 32px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-card);
+  box-sizing: border-box;
+}
+
+.auth-icon {
+  width: 54px;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  background: rgba(59, 130, 246, 0.12);
+  color: var(--color-primary);
+}
+
+.auth-card h1 {
+  margin: 0;
+  text-align: center;
+  color: var(--color-text);
+}
+
+.auth-subtitle {
+  margin: 8px 0 28px;
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+.auth-error {
+  margin-bottom: 18px;
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  background: rgba(239, 68, 68, 0.12);
+  color: #f87171;
+  font-size: var(--font-size-sm);
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.auth-form label {
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.auth-form input {
+  width: 100%;
+  height: 46px;
+  padding: 0 14px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  outline: none;
+  background: var(--color-bg-secondary);
+  color: var(--color-text);
+  box-sizing: border-box;
+}
+
+.auth-form input:focus {
+  border-color: var(--color-primary);
+}
+
+.auth-form input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.auth-submit {
+  height: 46px;
+  margin-top: 12px;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: var(--color-primary);
+  color: var(--color-text);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+}
+
+.auth-submit:hover {
+  opacity: 0.9;
+}
+
+.auth-footer {
+  margin: 22px 0 0;
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.auth-footer a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+@media (max-width: 900px) {
+  .auth-page {
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-page {
+    padding: 24px 16px;
+  }
+
+  .auth-card {
+    padding: 24px 18px;
+  }
+}

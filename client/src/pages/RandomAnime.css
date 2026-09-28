@@ -1,0 +1,223 @@
+.random-anime-page {
+  margin-left: 240px;
+  width: calc(100% - 240px);
+  min-height: calc(100vh - 80px);
+  box-sizing: border-box;
+}
+
+.random-anime-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 32px;
+  box-sizing: border-box;
+}
+
+.random-anime-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.random-anime-header h1 {
+  margin: 0 0 8px;
+  color: var(--color-text);
+  font-size: 28px;
+  font-weight: var(--font-weight-semibold);
+}
+
+.random-anime-header p {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+.random-anime-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 120px;
+  height: 44px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: var(--color-primary);
+  color: var(--color-text);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+}
+
+.random-anime-button:hover {
+  opacity: 0.9;
+}
+
+.random-anime-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.random-anime-result {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 24px 16px;
+}
+
+@media (max-width: 1400px) {
+  .random-anime-result {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1100px) {
+  .random-anime-result {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .random-anime-page {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .random-anime-container {
+    padding: 24px 20px;
+  }
+
+  .random-anime-result {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .random-anime-container {
+    padding: 20px 16px;
+  }
+
+  .random-anime-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .random-anime-header h1 {
+    font-size: 22px;
+  }
+
+  .random-anime-result {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px 12px;
+  }
+}
+.random-anime-page {
+  margin-left: var(--sidebar-width);
+  padding-bottom: var(--space-10);
+}
+
+.random-anime-container {
+  width: min(100% - 2rem, var(--container-max-width));
+  margin-inline: auto;
+}
+
+.random-anime-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+  padding-block: var(--space-8);
+}
+
+.random-anime-header h1 {
+  color: var(--color-text);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+}
+
+.random-anime-header p {
+  margin-top: var(--space-2);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.random-anime-refresh {
+  flex-shrink: 0;
+  padding: 0.65rem 1rem;
+  border: 0;
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  background: var(--color-primary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition:
+    background var(--transition-normal),
+    transform var(--transition-normal);
+}
+
+.random-anime-refresh:hover:not(:disabled) {
+  background: var(--color-primary-hover);
+  transform: translateY(-1px);
+}
+
+.random-anime-refresh:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.random-anime-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: var(--space-5);
+}
+
+@media (max-width: 1200px) {
+  .random-anime-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1024px) {
+  .random-anime-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+}
+
+@media (max-width: 768px) {
+  .random-anime-page {
+    margin-left: 0;
+    padding-bottom: calc(
+      var(--mobile-navbar-height) + var(--space-6)
+    );
+  }
+
+  .random-anime-container {
+    width: min(100% - 1.5rem, 100%);
+  }
+
+  .random-anime-header {
+    align-items: flex-start;
+    flex-direction: column;
+    padding-block: var(--space-5);
+  }
+
+  .random-anime-refresh {
+    width: 100%;
+  }
+
+  .random-anime-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-3);
+  }
+}
+
+@media (max-width: 480px) {
+  .random-anime-container {
+    width: min(100% - 1rem, 100%);
+  }
+
+  .random-anime-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

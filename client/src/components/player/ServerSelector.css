@@ -1,0 +1,81 @@
+.server-selector { 
+     width: 100%; 
+     margin-top: 20px;
+      padding: 18px;
+       background: var(--secondary-bg, #111111);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+         border-radius: 10px; 
+         box-sizing: border-box;
+         }
+ .server-selector__header { 
+    display: flex;
+     align-items: center;
+      gap: 10px;
+       margin-bottom: 15px; 
+    }
+ .server-selector__title {
+     margin: 0; 
+     color: var(--text, #ffffff);
+      font-size: 16px;
+       font-weight: 700;
+        }
+ .server-selector__count {
+     display: inline-flex;
+      align-items: center; 
+      justify-content: center;
+       min-width: 24px;
+        height: 24px; 
+        padding: 0 7px; 
+        color: #ffffff; 
+        font-size: 12px;
+         font-weight: 600;
+          background: var(--card-bg, #171717);
+           border-radius: 6px; 
+        }
+ .server-selector__list { 
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 10px; 
+    } 
+.server-selector__button { 
+    display: inline-flex; 
+    align-items: center; 
+    gap: 8px; 
+    padding: 9px 13px; 
+    color: var(--secondary-text, #9ca3af); 
+    font-size: 13px; 
+    font-weight: 600; 
+    background: var(--card-bg, #171717); 
+    border: 1px solid rgba(255, 255, 255, 0.08); 
+    border-radius: 7px; 
+    cursor: pointer; 
+    transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease, transform 0.2s ease; 
+    }
+.server-selector__button:hover { 
+    color: #ffffff; 
+    border-color: rgba(59, 130, 246, 0.5); 
+    transform: translateY(-1px);
+ } 
+.server-selector__button--active { 
+    color: #ffffff; 
+    background: linear-gradient( 135deg, var(--primary, #3b82f6), var(--secondary, #6366f1) ); 
+    border-color: transparent; 
+    } 
+.server-selector__status { 
+    font-size: 10px; 
+   } 
+.server-selector__name { 
+    white-space: nowrap;
+    }
+ @media (max-width: 480px) { 
+    .server-selector { 
+    padding: 14px; 
+    } 
+   .server-selector__list { 
+   gap: 8px; 
+} 
+.server-selector__button {
+     flex: 1 1 calc(50% - 8px); 
+     justify-content: center; 
+     padding: 9px 10px; 
+     } }

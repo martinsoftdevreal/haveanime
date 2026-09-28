@@ -1,0 +1,239 @@
+.footer {
+  width: calc(100% - 250px);
+  margin-left: 250px;
+  margin-top: 60px;
+
+  background: var(--secondary-bg, #111111);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* =========================
+   CONTAINER
+========================= */
+
+.footer__container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+
+  padding: 50px 32px 24px;
+  box-sizing: border-box;
+}
+
+/* =========================
+   TOP SECTION
+========================= */
+
+.footer__top {
+  display: grid;
+  grid-template-columns: 2fr repeat(3, 1fr);
+  gap: 40px;
+
+  padding-bottom: 40px;
+}
+
+/* =========================
+   BRAND
+========================= */
+
+.footer__brand {
+  max-width: 380px;
+}
+
+.footer__logo {
+  display: inline-block;
+
+  margin-bottom: 16px;
+
+  color: var(--text, #ffffff);
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1;
+  text-decoration: none;
+
+  background: linear-gradient(
+    135deg,
+    var(--primary, #3b82f6),
+    var(--secondary, #6366f1)
+  );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  transition: opacity 0.2s ease;
+}
+
+.footer__logo:hover {
+  opacity: 0.85;
+}
+
+.footer__description {
+  margin: 0;
+
+  color: var(--secondary-text, #9ca3af);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* =========================
+   COLUMNS
+========================= */
+
+.footer__column {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  gap: 11px;
+}
+
+.footer__heading {
+  margin: 0 0 8px;
+
+  color: var(--text, #ffffff);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.footer__link {
+  display: inline-block;
+
+  color: var(--secondary-text, #9ca3af);
+  font-size: 14px;
+  line-height: 1.5;
+
+  text-decoration: none;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.footer__link:hover {
+  color: var(--primary, #3b82f6);
+  transform: translateX(3px);
+}
+
+/* =========================
+   BOTTOM SECTION
+========================= */
+
+.footer__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding-top: 22px;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.footer__copyright,
+.footer__made {
+  margin: 0;
+
+  color: var(--secondary-text, #9ca3af);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.footer__made {
+  text-align: right;
+}
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 1000px) {
+  .footer {
+    width: calc(100% - 220px);
+    margin-left: 220px;
+  }
+
+  .footer__container {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .footer__top {
+    grid-template-columns: 1.5fr repeat(3, 1fr);
+    gap: 25px;
+  }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+  .footer {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 40px;
+  }
+
+  .footer__container {
+    padding: 40px 20px 20px;
+  }
+
+  .footer__top {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 35px 25px;
+
+    padding-bottom: 30px;
+  }
+
+  .footer__brand {
+    grid-column: 1 / -1;
+    max-width: 500px;
+  }
+
+  .footer__logo {
+    font-size: 25px;
+  }
+
+  .footer__description {
+    font-size: 13px;
+  }
+
+  .footer__heading {
+    font-size: 14px;
+  }
+
+  .footer__link {
+    font-size: 13px;
+  }
+
+  .footer__bottom {
+    flex-direction: column;
+    align-items: flex-start;
+
+    gap: 10px;
+  }
+
+  .footer__made {
+    text-align: left;
+  }
+}
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media (max-width: 400px) {
+  .footer__container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .footer__top {
+    gap: 30px 18px;
+  }
+
+  .footer__logo {
+    font-size: 23px;
+  }
+}
