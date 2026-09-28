@@ -6,6 +6,8 @@ import './AnimeDetails.css';
 import Loader from '../components/common/Loader';
 import ErrorMessage from '../components/common/ErrorMessage';
 
+import { useAuthContext } from '../context/AuthContext';
+import { useMedia } from '../context/MediaContext';
 import api from '../services/api';
 
 function AnimeDetails({ animeId }) {
@@ -14,6 +16,9 @@ function AnimeDetails({ animeId }) {
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+
+  const { isLoggedIn, user } = useAuthContext();
+  const { addToWatchlist, removeFromWatchlist, isInWatchlist } = useMedia();
 
   const loadPage = useCallback(async () => {
     if (!animeId) {
@@ -116,6 +121,22 @@ function AnimeDetails({ animeId }) {
             episodesResponse;
         }
 
+        if (episodesData.length === 0) {
+          try {
+            const fallback = await api.getAnimeHeavenFallback(animeId);
+            const fallbackData = fallback?.parsed || { seasons: [], episodes: [] };
+
+            if (Array.isArray(fallbackData.episodes) && fallbackData.episodes.length > 0) {
+              episodesData = fallbackData.episodes;
+            }
+          } catch (fallbackError) {
+            console.warn(
+              'AnimeHeaven episode fallback failed:',
+              fallbackError
+            );
+          }
+        }
+
         setEpisodes(episodesData);
       } catch (episodeError) {
         /*
@@ -197,6 +218,29 @@ function AnimeDetails({ animeId }) {
         }
 
         setAnime(animeData);
+
+        if (
+          (!Array.isArray(animeData?.moreSeasons) || animeData.moreSeasons.length === 0) &&
+          animeId
+        ) {
+          try {
+            const fallback = await api.getAnimeHeavenFallback(animeId);
+            const fallbackData = fallback?.parsed || { seasons: [], episodes: [] };
+
+            if (
+              Array.isArray(fallbackData.seasons) &&
+              fallbackData.seasons.length > 0 &&
+              (!Array.isArray(animeData.moreSeasons) || animeData.moreSeasons.length === 0)
+            ) {
+              animeData.moreSeasons = fallbackData.seasons;
+            }
+          } catch (fallbackError) {
+            console.warn(
+              'AnimeHeaven season fallback failed:',
+              fallbackError
+            );
+          }
+        }
 
         /*
          * Fetch episodes internally only for
@@ -487,6 +531,48 @@ function AnimeDetails({ animeId }) {
     firstEpisode?.episode_id;
 
   const animeRouteId = id || animeId;
+  const isSaved = Boolean(
+    animeRouteId && isInWatchlist(animeRouteId)
+  );
+
+  const handleWatchlistToggle = () => {
+    if (!isLoggedIn || !user?.emailVerified) {
+      window.location.href = '/login';
+      return;
+    }
+
+    if (!anime) {
+      return;
+    }
+
+    const safeAnime = {
+      id: String(animeRouteId || anime.id),
+      title:
+        anime.title ||
+        anime.name ||
+        anime.titleEnglish ||
+        'Anime',
+      poster: anime.poster || anime.image || anime.cover,
+      genre: Array.isArray(anime.genres)
+        ? anime.genres
+            .map((genre) =>
+              typeof genre === 'string'
+                ? genre
+                : genre?.name || genre?.title
+            )
+            .filter(Boolean)
+            .slice(0, 3)
+            .join(', ')
+        : '',
+    };
+
+    if (isSaved) {
+      removeFromWatchlist(safeAnime.id);
+      return;
+    }
+
+    addToWatchlist(safeAnime);
+  };
 
   return (
     <main className="anime-details">
@@ -498,6 +584,8 @@ function AnimeDetails({ animeId }) {
             src={poster}
             alt=""
             aria-hidden="true"
+            loading="lazy"
+            decoding="async"
           />
         )}
 
@@ -513,6 +601,8 @@ function AnimeDetails({ animeId }) {
                   title ||
                   'Anime poster'
                 }
+                loading="lazy"
+                decoding="async"
               />
             </div>
           )}
@@ -602,6 +692,14 @@ function AnimeDetails({ animeId }) {
               >
                 ▶ Watch Now
               </a>
+
+              <button
+                type="button"
+                className="anime-details__button anime-details__button--secondary"
+                onClick={handleWatchlistToggle}
+              >
+                {isSaved ? '★ Saved' : '＋ Watchlist'}
+              </button>
 
               <a
                 href="/"

@@ -11,33 +11,46 @@ function Login() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    const user = JSON.parse(
-      localStorage.getItem('hianimeUser')
-    );
-
-    if (!user) {
-      setError(
-        'No account found. Please create an account first.'
+    try {
+      const user = JSON.parse(
+        localStorage.getItem('hianimeUser')
       );
-      return;
-    }
 
-    if (
-      user.email !== email.trim().toLowerCase() ||
-      user.password !== password
-    ) {
-      setError(
-        'Invalid email or password.'
+      if (!user) {
+        setError(
+          'No account found. Please create an account first.'
+        );
+        return;
+      }
+
+      if (
+        user.email !== email.trim().toLowerCase() ||
+        user.password !== password
+      ) {
+        setError(
+          'Invalid email or password.'
+        );
+        return;
+      }
+
+      if (user.emailVerified !== true) {
+        setError(
+          'Please verify your email address before logging in.'
+        );
+        return;
+      }
+
+      localStorage.setItem(
+        'hianimeLoggedIn',
+        'true'
       );
-      return;
+
+      window.location.href = '/profile';
+    } catch {
+      setError(
+        'Your account data could not be read. Please register again.'
+      );
     }
-
-    localStorage.setItem(
-      'hianimeLoggedIn',
-      'true'
-    );
-
-    window.location.href = '/profile';
   };
 
   return (

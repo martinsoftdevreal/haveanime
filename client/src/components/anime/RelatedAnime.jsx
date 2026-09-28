@@ -7,7 +7,7 @@ import EmptyState from '../common/EmptyState';
 
 import './RelatedAnime.css';
 
-const API_BASE_URL = 'http://localhost:5000/api/v2';
+const API_BASE_URL = '/api/v2';
 
 function normalizeGenre(genre) {
   if (typeof genre === 'string') {
@@ -35,25 +35,18 @@ function RelatedAnime({ genres = [], currentAnimeId }) {
       try {
         setLoading(true);
 
-        const response = await fetch(
-          `${API_BASE_URL}/animes/genre/${encodeURIComponent(
-            firstGenre.toLowerCase().replace(/\s+/g, '-')
-          )}?page=1`
+        const data = await api.fetchWithFallback(
+          [`/animes/genre/${encodeURIComponent(firstGenre.toLowerCase().replace(/\s+/g, '-'))}?page=1`, `/anime/genre/${encodeURIComponent(firstGenre.toLowerCase().replace(/\s+/g, '-'))}?page=1`],
+          'related-anime'
         );
-
-        if (!response.ok) {
-          throw new Error(
-            'Failed to load related anime.'
-          );
-        }
-
-        const data = await response.json();
 
         const results = Array.isArray(
           data?.data?.response
         )
           ? data.data.response
-          : [];
+          : Array.isArray(data?.data)
+            ? data.data
+            : [];
 
         const filtered = results
           .filter(

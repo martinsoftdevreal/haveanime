@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './AnimeCard.css';
 
 function getHighResolutionPoster(poster) {
@@ -52,6 +52,38 @@ function AnimeCard({ anime }) {
   );
 
   const [usedFallback, setUsedFallback] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const imageRef = useRef(null);
+
+  useEffect(() => {
+    const node = imageRef.current;
+
+    if (!node) {
+      return undefined;
+    }
+
+    if (typeof window === 'undefined' || !('IntersectionObserver' in window)) {
+      setIsVisible(true);
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      {
+        rootMargin: '200px',
+        threshold: 0.01,
+      }
+    );
+
+    observer.observe(node);
+
+    return () => observer.disconnect();
+  }, []);
 
   const handleImageError = () => {
     if (!usedFallback && originalPoster) {
@@ -67,8 +99,9 @@ function AnimeCard({ anime }) {
         className="anime-card__poster-link"
       >
         <img
+          ref={imageRef}
           className="anime-card__poster"
-          src={imageSrc}
+          src={isVisible ? imageSrc || undefined : undefined}
           alt={title || 'Anime poster'}
           loading="lazy"
           decoding="async"

@@ -4,10 +4,9 @@ import AnimeCard from '../components/anime/AnimeCard';
 import Loader from '../components/common/Loader';
 import ErrorMessage from '../components/common/ErrorMessage';
 import EmptyState from '../components/common/EmptyState';
+import api from '../services/api';
 
 import './Genres.css';
-
-const API_BASE_URL = 'http://localhost:5000/api/v2';
 
 function Genres({ genre = '' }) {
   const [genres, setGenres] = useState([]);
@@ -25,39 +24,24 @@ function Genres({ genre = '' }) {
         setError('');
 
         if (isGenrePage) {
-          const response = await fetch(
-            `${API_BASE_URL}/animes/genre/${encodeURIComponent(
-              genre
-            )}?page=1`
+          const data = await api.fetchWithFallback(
+            [`/animes/genre/${encodeURIComponent(genre)}?page=1`, `/anime/genre/${encodeURIComponent(genre)}?page=1`],
+            'genres-page'
           );
-
-          if (!response.ok) {
-            throw new Error(
-              'Failed to load anime for this genre.'
-            );
-          }
-
-          const data = await response.json();
 
           const results = Array.isArray(
             data?.data?.response
           )
             ? data.data.response
-            : [];
+            : Array.isArray(data?.data)
+              ? data.data
+              : [];
 
           setAnime(results);
           return;
         }
 
-        const response = await fetch(
-          `${API_BASE_URL}/genres`
-        );
-
-        if (!response.ok) {
-          throw new Error('Failed to load genres.');
-        }
-
-        const data = await response.json();
+        const data = await api.getGenres();
 
         const results = Array.isArray(data?.data)
           ? data.data

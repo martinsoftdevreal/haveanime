@@ -4,6 +4,7 @@ import { CalendarDays } from 'lucide-react';
 import Loader from '../components/common/Loader';
 import ErrorMessage from '../components/common/ErrorMessage';
 import EmptyState from '../components/common/EmptyState';
+import api from '../services/api';
 
 import './Schedule.css';
 
@@ -18,17 +19,7 @@ function Schedule() {
         setLoading(true);
         setError('');
 
-        const response = await fetch(
-          'http://localhost:5000/api/v2/schedules'
-        );
-
-        if (!response.ok) {
-          throw new Error(
-            'Failed to load anime schedule.'
-          );
-        }
-
-        const data = await response.json();
+        const data = await api.getSchedules();
 
         const scheduleData =
           data?.data &&
@@ -49,7 +40,7 @@ function Schedule() {
           }));
         });
 
-        setSchedule(flattenedSchedule);
+        setSchedule(flattenedSchedule.slice(0, 12));
       } catch (err) {
         console.error('Schedule error:', err);
         setSchedule([]);

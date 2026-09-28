@@ -4,25 +4,14 @@ import AnimeCard from '../components/anime/AnimeCard';
 import Loader from '../components/common/Loader';
 import ErrorMessage from '../components/common/ErrorMessage';
 import EmptyState from '../components/common/EmptyState';
+import api from '../services/api';
 
 import './RandomAnime.css';
 
-const API_BASE_URL = 'http://localhost:5000/api/v2';
-
 async function getRandomAnimeId() {
-  const response = await fetch(
-    `${API_BASE_URL}/random`
-  );
+  const data = await api.getRandomAnime();
 
-  if (!response.ok) {
-    throw new Error(
-      'Failed to get random anime.'
-    );
-  }
-
-  const data = await response.json();
-
-  const id = data?.data?.id;
+  const id = data?.data?.id ?? data?.id;
 
   if (!id) {
     throw new Error(
@@ -34,17 +23,7 @@ async function getRandomAnimeId() {
 }
 
 async function getAnimeDetails(id) {
-  const response = await fetch(
-    `${API_BASE_URL}/anime/${encodeURIComponent(id)}`
-  );
-
-  if (!response.ok) {
-    throw new Error(
-      `Failed to load anime ${id}.`
-    );
-  }
-
-  const data = await response.json();
+  const data = await api.getAnime(id);
 
   const anime =
     data?.data?.data ??
@@ -61,53 +40,16 @@ async function getAnimeDetails(id) {
   };
 }
 
-async function fetchSixRandomAnime() {
-  const uniqueIds = new Set();
+async function fetchSingleRandomAnime() {
+  try {
+    const id = await getRandomAnimeId();
+    const anime = await getAnimeDetails(id);
 
-  /*
-   * Request more than 6 IDs because the random
-   * endpoint can return the same ID more than once.
-   */
-  for (let attempt = 0; attempt < 15; attempt += 1) {
-    if (uniqueIds.size >= 6) {
-      break;
-    }
-
-    try {
-      const id = await getRandomAnimeId();
-      uniqueIds.add(id);
-    } catch (error) {
-      console.error(
-        'Random ID error:',
-        error
-      );
-    }
+    return anime ? [anime] : [];
+  } catch (error) {
+    console.error('Random anime error:', error);
+    return [];
   }
-
-  if (uniqueIds.size === 0) {
-    throw new Error(
-      'Could not get random anime IDs.'
-    );
-  }
-
-  const details = await Promise.all(
-    [...uniqueIds].map(async (id) => {
-      try {
-        return await getAnimeDetails(id);
-      } catch (error) {
-        console.error(
-          `Failed to load anime ${id}:`,
-          error
-        );
-
-        return null;
-      }
-    })
-  );
-
-  return details
-    .filter(Boolean)
-    .slice(0, 6);
 }
 
 function RandomAnime() {
@@ -121,8 +63,7 @@ function RandomAnime() {
       setError('');
       setAnime([]);
 
-      const results =
-        await fetchSixRandomAnime();
+      const results = await fetchSingleRandomAnime();
 
       if (!results.length) {
         throw new Error(
@@ -160,7 +101,7 @@ function RandomAnime() {
             <h1>Random Anime</h1>
 
             <p>
-              Discover 6 different random anime.
+              Discover one random anime recommendation.
             </p>
           </div>
 
@@ -172,7 +113,7 @@ function RandomAnime() {
           >
             {loading
               ? 'Loading...'
-              : 'Get 6 Random Anime'}
+              : 'Get Random Anime'}
           </button>
         </header>
 
@@ -199,7 +140,7 @@ function RandomAnime() {
         {!loading &&
           !error &&
           anime.length > 0 && (
-            <section className="random-anime-grid">
+            <section className="random-anime-hero">
               {anime.map((item, index) => (
                 <AnimeCard
                   key={

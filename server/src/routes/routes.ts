@@ -38,6 +38,56 @@ import topSearchController from '../controllers/topSearch.controller';
 
 const router = new Hono();
 
+router.get('/external', async (c) => {
+  const targetUrl = c.req.query('url');
+
+  if (!targetUrl) {
+    return c.json(
+      {
+        success: false,
+        message: 'Missing url query parameter',
+      },
+      400
+    );
+  }
+
+  try {
+    const response = await fetch(targetUrl, {
+      headers: {
+        'User-Agent':
+          'Mozilla/5.0 (X11; Linux x86_64; rv:122.0) Gecko/20100101 Firefox/122.0',
+        Accept:
+          'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+        'Accept-Language': 'en-US,en;q=0.5',
+      },
+    });
+
+    const contentType =
+      response.headers.get('content-type') ||
+      'text/html; charset=utf-8';
+    const body = await response.text();
+
+    return new Response(body, {
+      status: response.status,
+      headers: {
+        'content-type': contentType,
+        'cache-control': 'no-store',
+      },
+    });
+  } catch (error) {
+    return c.json(
+      {
+        success: false,
+        message:
+          error instanceof Error
+            ? error.message
+            : 'External fetch failed',
+      },
+      502
+    );
+  }
+});
+
 router.get('/home', handler(homepageController));
 
 router.get('/top-search', handler(topSearchController));

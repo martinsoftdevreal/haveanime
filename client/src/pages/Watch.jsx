@@ -76,6 +76,22 @@ function Watch({ animeId, episodeId }) {
 
         const data = response?.data ?? response;
 
+        if (
+          (!Array.isArray(data?.moreSeasons) || data.moreSeasons.length === 0) &&
+          animeId
+        ) {
+          try {
+            const fallback = await api.getAnimeHeavenFallback(animeId);
+            const fallbackData = fallback?.parsed || { seasons: [], episodes: [] };
+
+            if (Array.isArray(fallbackData.seasons) && fallbackData.seasons.length > 0) {
+              data.moreSeasons = fallbackData.seasons;
+            }
+          } catch (fallbackError) {
+            console.warn('AnimeHeaven season fallback failed in watch page:', fallbackError);
+          }
+        }
+
         setAnime(data);
       } catch (err) {
         if (cancelled) {
@@ -136,6 +152,19 @@ function Watch({ animeId, episodeId }) {
           episodeData = data.episodes;
         } else if (Array.isArray(data?.data)) {
           episodeData = data.data;
+        }
+
+        if (episodeData.length === 0 && animeId) {
+          try {
+            const fallback = await api.getAnimeHeavenFallback(animeId);
+            const fallbackData = fallback?.parsed || { seasons: [], episodes: [] };
+
+            if (Array.isArray(fallbackData.episodes) && fallbackData.episodes.length > 0) {
+              episodeData = fallbackData.episodes;
+            }
+          } catch (fallbackError) {
+            console.warn('AnimeHeaven episode fallback failed in watch page:', fallbackError);
+          }
         }
 
         setEpisodes(episodeData);

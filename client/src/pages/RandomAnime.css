@@ -165,22 +165,16 @@
   cursor: not-allowed;
 }
 
-.random-anime-grid {
+.random-anime-hero {
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 360px);
+  justify-content: center;
   gap: var(--space-5);
 }
 
 @media (max-width: 1200px) {
-  .random-anime-grid {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 1024px) {
-  .random-anime-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: var(--space-4);
+  .random-anime-hero {
+    grid-template-columns: minmax(0, 320px);
   }
 }
 
@@ -206,8 +200,8 @@
     width: 100%;
   }
 
-  .random-anime-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+  .random-anime-hero {
+    grid-template-columns: minmax(0, 100%);
     gap: var(--space-3);
   }
 }
@@ -217,7 +211,7 @@
     width: min(100% - 1rem, 100%);
   }
 
-  .random-anime-grid {
+  .random-anime-hero {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }

@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 
 import AnimeCard from '../components/anime/AnimeCard';
+import api from '../services/api';
 
 import './Search.css';
 
@@ -43,24 +44,14 @@ function Search() {
         setLoading(true);
         setError('');
 
-        const response = await fetch(
-          `/api/v2/search?keyword=${encodeURIComponent(
-            keyword
-          )}`
-        );
-
-        if (!response.ok) {
-          throw new Error(
-            'Failed to fetch search results'
-          );
-        }
-
-        const data = await response.json();
+        const data = await api.searchAnime(keyword);
 
         setAnime(
           Array.isArray(data?.data?.response)
             ? data.data.response
-            : []
+            : Array.isArray(data?.data)
+              ? data.data
+              : []
         );
       } catch (err) {
         console.error('Search error:', err);

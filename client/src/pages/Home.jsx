@@ -23,11 +23,9 @@ function Home() {
       setLoading(true);
       setError('');
 
-      const response = await api.getHome();
+      const response = await api.getHomeCompact().catch(() => api.getHomeBackup());
 
-      const data = response?.data?.data ?? response?.data ?? response;
-
-      setHomeData(data || {});
+      setHomeData(response || {});
     } catch (err) {
       console.error('Home page error:', err);
 

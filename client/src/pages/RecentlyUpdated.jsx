@@ -4,6 +4,7 @@ import AnimeCard from '../components/anime/AnimeCard';
 import Loader from '../components/common/Loader';
 import ErrorMessage from '../components/common/ErrorMessage';
 import EmptyState from '../components/common/EmptyState';
+import api from '../services/api';
 
 import './RecentlyUpdated.css';
 
@@ -18,19 +19,16 @@ function RecentlyUpdated() {
         setLoading(true);
         setError('');
 
-        const response = await fetch(
-          'http://localhost:5000/api/v2/animes/recently-updated'
+        const data = await api.fetchWithFallback(
+          ['/animes/recently-updated', '/recently-updated'],
+          'recently-updated'
         );
-
-        if (!response.ok) {
-          throw new Error('Failed to load recently updated anime.');
-        }
-
-        const data = await response.json();
 
         const results = Array.isArray(data?.data?.response)
           ? data.data.response
-          : [];
+          : Array.isArray(data?.data)
+            ? data.data
+            : [];
 
         setAnime(results);
       } catch (err) {

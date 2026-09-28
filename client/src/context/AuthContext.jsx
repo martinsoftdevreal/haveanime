@@ -10,6 +10,7 @@ const AuthContext = createContext(null);
 
 const AUTH_KEY = 'hianimeLoggedIn';
 const USER_KEY = 'hianimeUser';
+const VERIFICATION_KEY = 'hianimeEmailVerification';
 
 function getStoredUser() {
   try {
@@ -34,22 +35,32 @@ export function AuthProvider({ children }) {
   );
 
   const login = useCallback((userData = null) => {
+    const nextUser = userData || getStoredUser();
+
+    if (!nextUser?.emailVerified) {
+      setIsLoggedIn(false);
+      setUser(nextUser || null);
+      return false;
+    }
+
     localStorage.setItem(AUTH_KEY, 'true');
 
-    if (userData) {
+    if (nextUser) {
       localStorage.setItem(
         USER_KEY,
-        JSON.stringify(userData)
+        JSON.stringify(nextUser)
       );
     }
 
     setIsLoggedIn(true);
-    setUser(userData || getStoredUser());
+    setUser(nextUser);
+    return true;
   }, []);
 
   const logout = useCallback(() => {
     localStorage.removeItem(AUTH_KEY);
     localStorage.removeItem(USER_KEY);
+    localStorage.removeItem(VERIFICATION_KEY);
 
     setIsLoggedIn(false);
     setUser(null);
@@ -68,6 +79,30 @@ export function AuthProvider({ children }) {
     setUser(userData);
   }, []);
 
+  const markEmailVerified = useCallback(() => {
+    const currentUser = getStoredUser();
+
+    if (!currentUser) {
+      return false;
+    }
+
+    const verifiedUser = {
+      ...currentUser,
+      emailVerified: true,
+      verifiedAt: new Date().toISOString(),
+    };
+
+    localStorage.setItem(
+      USER_KEY,
+      JSON.stringify(verifiedUser)
+    );
+    localStorage.removeItem(VERIFICATION_KEY);
+    setUser(verifiedUser);
+    setIsLoggedIn(true);
+
+    return true;
+  }, []);
+
   const value = useMemo(
     () => ({
       isLoggedIn,
@@ -75,6 +110,7 @@ export function AuthProvider({ children }) {
       login,
       logout,
       updateUser,
+      markEmailVerified,
     }),
     [
       isLoggedIn,
@@ -82,6 +118,7 @@ export function AuthProvider({ children }) {
       login,
       logout,
       updateUser,
+      markEmailVerified,
     ]
   );
 

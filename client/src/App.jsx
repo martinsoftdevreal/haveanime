@@ -2,6 +2,7 @@ import Navbar from './components/layout/Navbar';
 import Sidebar from './components/layout/Sidebar';
 import MobileNavbar from './components/layout/MobileNavbar';
 import Footer from './components/layout/Footer';
+import BackendStatus from './components/common/BackendStatus';
 
 import Home from './pages/Home';
 import AnimeDetails from './pages/AnimeDetails';
@@ -62,6 +63,7 @@ function App() {
       <Navbar />
       <Sidebar />
       <MobileNavbar />
+      <BackendStatus />
 
       {watchMatch ? (
         <Watch

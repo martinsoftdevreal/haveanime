@@ -4,6 +4,7 @@ import AnimeCard from '../components/anime/AnimeCard';
 import Loader from '../components/common/Loader';
 import ErrorMessage from '../components/common/ErrorMessage';
 import EmptyState from '../components/common/EmptyState';
+import api from '../services/api';
 
 import './MostPopular.css';
 
@@ -18,25 +19,17 @@ function MostPopular() {
         setLoading(true);
         setError('');
 
-        const response = await fetch(
-          'http://localhost:5000/api/v2/animes/most-popular'
-        );
-
-        if (!response.ok) {
-          throw new Error(
-            'Failed to load most popular anime.'
-          );
-        }
-
-        const data = await response.json();
+        const data = await api.getMostPopular();
 
         const results = Array.isArray(
           data?.data?.response
         )
           ? data.data.response
-          : [];
+          : Array.isArray(data?.data)
+            ? data.data
+            : [];
 
-        setAnime(results);
+        setAnime(results.slice(0, 8));
       } catch (err) {
         console.error('Most popular error:', err);
         setAnime([]);

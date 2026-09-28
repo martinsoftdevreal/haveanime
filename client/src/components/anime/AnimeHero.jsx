@@ -57,6 +57,8 @@ function AnimeHero({ spotlight = [] }) {
             src={poster}
             alt=""
             aria-hidden="true"
+            loading="eager"
+            decoding="async"
           />
         )}
 

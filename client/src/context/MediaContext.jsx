@@ -2,23 +2,44 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useState,
 } from 'react';
 
+import { useAuthContext } from './AuthContext';
+
 const MediaContext = createContext(null);
 
-export function MediaProvider({ children }) {
-  const [watchlist, setWatchlist] = useState(() => {
-    try {
-      const stored =
-        localStorage.getItem(
-          'hianimeWatchlist'
-        );
+function getCurrentUser() {
+  try {
+    const storedUser =
+      localStorage.getItem('hianimeUser');
 
-      return stored
-        ? JSON.parse(stored)
-        : [];
+    return storedUser
+      ? JSON.parse(storedUser)
+      : null;
+  } catch {
+    return null;
+  }
+}
+
+function getUserKey(user) {
+  return user?.email
+    ? `hianimeWatchlist_${user.email.toLowerCase()}`
+    : 'hianimeWatchlist_guest';
+}
+
+export function MediaProvider({ children }) {
+  const { user, isLoggedIn } = useAuthContext();
+
+  const [watchlist, setWatchlist] = useState(() => {
+    const currentUser = getCurrentUser();
+    const key = getUserKey(currentUser);
+
+    try {
+      const stored = localStorage.getItem(key);
+      return stored ? JSON.parse(stored) : [];
     } catch {
       return [];
     }
@@ -39,10 +60,28 @@ export function MediaProvider({ children }) {
     }
   });
 
-  const addToWatchlist = useCallback((anime) => {
-    if (!anime?.id) {
+  useEffect(() => {
+    if (!isLoggedIn || !user?.emailVerified) {
+      setWatchlist([]);
       return;
     }
+
+    const key = getUserKey(user);
+
+    try {
+      const stored = localStorage.getItem(key);
+      setWatchlist(stored ? JSON.parse(stored) : []);
+    } catch {
+      setWatchlist([]);
+    }
+  }, [isLoggedIn, user]);
+
+  const addToWatchlist = useCallback((anime) => {
+    if (!anime?.id || !isLoggedIn || !user?.emailVerified) {
+      return false;
+    }
+
+    const key = getUserKey(user);
 
     setWatchlist((current) => {
       const exists = current.some(
@@ -57,20 +96,31 @@ export function MediaProvider({ children }) {
 
       const updated = [
         ...current,
-        anime,
+        {
+          ...anime,
+          id: String(anime.id),
+        },
       ];
 
       localStorage.setItem(
-        'hianimeWatchlist',
+        key,
         JSON.stringify(updated)
       );
 
       return updated;
     });
-  }, []);
+
+    return true;
+  }, [isLoggedIn, user]);
 
   const removeFromWatchlist = useCallback(
     (animeId) => {
+      if (!isLoggedIn || !user?.emailVerified) {
+        return false;
+      }
+
+      const key = getUserKey(user);
+
       setWatchlist((current) => {
         const updated = current.filter(
           (item) =>
@@ -79,14 +129,16 @@ export function MediaProvider({ children }) {
         );
 
         localStorage.setItem(
-          'hianimeWatchlist',
+          key,
           JSON.stringify(updated)
         );
 
         return updated;
       });
+
+      return true;
     },
-    []
+    [isLoggedIn, user]
   );
 
   const isInWatchlist = useCallback(
