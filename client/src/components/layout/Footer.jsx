@@ -1,4 +1,5 @@
 import './Footer.css';
+import AdBanner from '../common/AdBanner';
 
 function Footer() {
   const currentYear = new Date().getFullYear();
@@ -6,6 +7,8 @@ function Footer() {
   return (
     <footer className="footer">
       <div className="footer__container container">
+        <AdBanner />
+
         <div className="footer__top">
           <div className="footer__brand">
             <a href="/" className="footer__logo">

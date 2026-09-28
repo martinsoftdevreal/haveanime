@@ -14,14 +14,37 @@
 
 .ad-banner__content {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
+  gap: 12px;
   width: 100%;
   min-height: 70px;
   color: var(--color-text-dark);
   font-size: var(--font-size-xs);
   letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+
+.ad-banner__label {
+  opacity: 0.8;
+}
+
+.ad-banner__link {
+  padding: 10px 16px;
+  border: 1px solid var(--border-color-light);
+  border-radius: var(--radius-sm);
+  color: var(--color-text, #ffffff);
+  text-decoration: none;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.ad-banner__link:hover,
+.ad-banner__link:focus-visible {
+  background: var(--color-bg-hover, #222222);
+  color: var(--color-text, #ffffff);
 }
 
 @media (max-width: 768px) {
@@ -33,5 +56,9 @@
 
   .ad-banner__content {
     min-height: 50px;
+  }
+
+  .ad-banner__link {
+    padding: 8px 12px;
   }
 }
