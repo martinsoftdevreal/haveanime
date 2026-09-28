@@ -2,7 +2,7 @@ import config from '../config/config';
 
 const MAX_RETRIES = 3;
 const RETRY_DELAY = 1000;
-const TIMEOUT = 10000;
+const TIMEOUT = 30000;
 
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -29,19 +29,14 @@ export const axiosInstance = async (
       const timeoutId = setTimeout(() => controller.abort(), TIMEOUT);
 
       const response = await fetch(url, {
-        headers: {
-          ...(config.headers || {}),
-          ...customHeaders,
-          Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-          'Accept-Language': 'en-US,en;q=0.5',
-          'Accept-Encoding': 'gzip, deflate, br',
-          Connection: 'keep-alive',
-          'Upgrade-Insecure-Requests': '1',
-          'Cache-Control': 'max-age=0',
+      headers: {
+    ...(config.headers || {}),
+    ...customHeaders,
+    Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+    'Accept-Language': 'en-US,en;q=0.5',
         },
-        signal: controller.signal,
-      });
-
+      signal: controller.signal,  
+        });
       clearTimeout(timeoutId);
 
       console.log(`Response status: ${response.status}`);

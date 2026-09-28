@@ -1,4 +1,4 @@
-const API_BASE_URL = 'https://api.animelab.website/api/v2';
+const API_BASE_URL = 'https://hianime-api.martinsoftdevreal.workers.dev/api/v2';
 
 
 
